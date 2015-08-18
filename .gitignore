@@ -54,4 +54,8 @@ coverage.xml
 docs/_build/
 
 # PyBuilder
+<<<<<<< HEAD
 target/
+=======
+target/
+>>>>>>> b22f6729402c09c550626f3a34e38033da95eafc
