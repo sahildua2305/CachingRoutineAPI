@@ -12,9 +12,6 @@ s.listen(1)
 
 LRU = LRUCache(5)
 
-get_flag = False
-post_flag = False
-
 while True:
     conn, addr = s.accept()
     data = conn.recv(1024)
@@ -31,7 +28,7 @@ while True:
     request_method = json_data["method"]
     if request_method == "GET":
     	lru_response = LRU.get(json_data["username"])
-    	conn.send(lru_response)
+    	conn.send(str(lru_response))
     elif request_method == "POST":
     	LRU.set(json_data["username"], json_data["fullname"])
 

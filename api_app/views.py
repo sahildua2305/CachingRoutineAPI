@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, FlatchatUser
+import socket, json
 
 # Signup view
 @csrf_exempt
@@ -76,10 +77,34 @@ def logout_view(request):
 # Get/Update Data view
 @csrf_exempt
 def user_data_view(request, username):
-	if username != request.user.username or not request.user.is_authenticated():
+	if not request.user.is_authenticated():
 		# Is the user isn't authenticated already
 		return JsonResponse({"msg": "permission denied"}, status = 403)
 	if request.method == "GET":
+		# make GET request to port 9000 and read the response
+		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		s.connect(("localhost", 9000))
+		get_data = {"method"   : "GET",
+					"username" : username}
+		s.send(json.dumps(get_data))
+		recv_data = s.recv(1024)
+		s.close()
+		if recv_data != "-1":
+			# user data found in cache
+			return JsonResponse({"msg": "user data retrieved successfully", "data": recv_data}, status=200)
+		else:
+			# user data not found in cache
+			# Find from db
+			query = ""
+			fetched_data = ""
+			# make POST request to save the data in cache
+			s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			s.connect(("localhost", 9000))
+			post_data = {"method"  : "POST",
+						"username" : username,
+						"userdata" : fetched_data}
+			s.send(json.dumps(post_data))
+			s.close()
 		# Return the user data
 		return JsonResponse({"msg": "user data retrieved successfully", "data": request.user.flatchatuser.data}, status=200)
 	elif request.method == "POST":

@@ -3,7 +3,7 @@ import socket, json
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("localhost", 9000))
 get_data = {"method"  : "GET",
-		"username": "sahild"}
+		"username": "sahildu"}
 post_data = {"method" : "POST",
 		"username": "sahildu",
 		"fullname": "Sahil Du"}
