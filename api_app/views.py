@@ -95,8 +95,8 @@ def user_data_view(request, username):
 		else:
 			# user data not found in cache
 			# Find from db
-			query = ""
-			fetched_data = ""
+			fetched_user = FlatchatUser.objects.get( user = User.objects.get(username = username) )
+			fetched_data = fetched_user.data
 			# make POST request to save the data in cache
 			s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			s.connect(("localhost", 9000))
@@ -106,7 +106,7 @@ def user_data_view(request, username):
 			s.send(json.dumps(post_data))
 			s.close()
 		# Return the user data
-		return JsonResponse({"msg": "user data retrieved successfully", "data": request.user.flatchatuser.data}, status=200)
+		return JsonResponse({"msg": "user data retrieved successfully", "data": post_data}, status=200)
 	elif request.method == "POST":
 		try:
 			data = request.POST['data']

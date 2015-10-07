@@ -30,6 +30,6 @@ while True:
     	lru_response = LRU.get(json_data["username"])
     	conn.send(str(lru_response))
     elif request_method == "POST":
-    	LRU.set(json_data["username"], json_data["fullname"])
+    	LRU.set(json_data["username"], json_data["userdata"])
 
     conn.close()
