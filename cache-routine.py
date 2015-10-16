@@ -3,11 +3,11 @@ import socket, json, sys
 
 if len ( sys.argv ) >= 5 :
     server_name = sys.argv[1]
-    port_number = sys.argv[2]
-    number_of_connections = sys.argv[3]
-    size_of_cache = sys.argv[4]
+    port_number = int ( sys.argv[2] )
+    number_of_connections = int ( sys.argv[3] )
+    size_of_cache = int ( sys.argv[4] )
 else:
-    print "Usage: python cache-routine.py server_name port_number number_of_connections size_of_cache"
+    print "Usage: \"python cache-routine.py server_name port_number number_of_connections size_of_cache\": Insufficient parameters"
     exit()
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
