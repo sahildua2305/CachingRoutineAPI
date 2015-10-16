@@ -1,7 +1,5 @@
 # CachingRoutineAPI
 ========================
-
-
 To start the Caching Routine:
 ------------------------------
 
